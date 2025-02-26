@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <header th:fragment="bodyHeader">
+        <div class="logo">
+            <img src="/images/arsenal-logo.jpg" alt="Arsenal Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">구단 소개</a></li>
+                <li><a href="#">구단 소속진</a></li>
+                <li><a href="#">경기 일정</a></li>
+                <li><a href="/news">구단 뉴스</a></li>
+                <li><a href="#">자유 게시판</a></li>
+                <li><a th:if="${session.loginMember == null}" href="/login">로그인</a></li>
+                <li><a th:if="${session.loginMember != null}" href="/signout">로그아웃</a></li>
+            </ul>
+        </nav>
+        <div th:if="${session.loginMember != null}">
+            <p> <strong>[[ ${session.loginMember.name} ]]</strong>님 반갑습니다. </p>
+        </div>
+    </header>
+</body>
+</html>

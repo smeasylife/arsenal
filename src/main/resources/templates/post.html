@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .post-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .post-meta {
+            color: gray;
+            margin-bottom: 20px;
+        }
+        .comment-form {
+            margin-top: 40px;
+        }
+        .comment-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{fragments/bodyheader :: bodyHeader}"/>
+<div class="container">
+    <!-- 게시물 제목 -->
+    <div class="post-title" th:text="${post.getTitle()}"></div>
+
+    <!-- 게시물 메타 정보 -->
+    <div class="post-meta" th:text="${post.getWriter().getName()}">작성자</div>
+    <div class="post-meta" th:text="${post.getPostDate()}">작성 시간</div>
+
+    <!-- 게시물 내용 -->
+    <div class="post-content">
+        <p th:text="${post.getContent()}"> 내용</p>
+    </div>
+
+    <!-- 댓글 섹션 -->
+    <div class="comment-section">
+        <h4>댓글 남기기</h4>
+        <form class="comment-form">
+            <div class="mb-3">
+                <label for="username" class="form-label">이름</label>
+                <input type="text" class="form-control" id="username" placeholder="이름을 입력하세요">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">댓글</label>
+                <textarea class="form-control" id="comment" rows="4" placeholder="댓글을 입력하세요"></textarea>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="saveInfo">
+                <label class="form-check-label" for="saveInfo">다음 댓글 작성시 이름과 이메일을 저장합니다.</label>
+            </div>
+            <button type="submit" class="btn btn-primary">댓글 달기</button>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>
