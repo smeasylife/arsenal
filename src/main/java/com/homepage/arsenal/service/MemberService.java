@@ -1,16 +1,13 @@
 package com.homepage.arsenal.service;
 
 import com.homepage.arsenal.domain.Member;
-import com.homepage.arsenal.dto.SignUpForm;
+import com.homepage.arsenal.dto.SignUpRequestForm;
 import com.homepage.arsenal.exception.MemberException;
 import com.homepage.arsenal.repository.MemberRepository;
-import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.SecureRandom;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,12 +21,12 @@ public class MemberService {
     }
 
     @Transactional
-    public Member saveMember(SignUpForm signUpForm){
-        validateDuplicatedUsername(signUpForm.getUsername());
+    public Member saveMember(SignUpRequestForm signUpRequestForm){
+        validateDuplicatedUsername(signUpRequestForm.getEmail());
         return memberRepository.save(Member.builder()
-                .username(signUpForm.getUsername())
-                .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .nickname(signUpForm.getNickname())
+                .email(signUpRequestForm.getEmail())
+                .password(passwordEncoder.encode(signUpRequestForm.getPassword()))
+                .nickname(signUpRequestForm.getNickname())
                 .build());
     }
 

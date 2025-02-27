@@ -35,6 +35,7 @@ public class Securityconfig{
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
+                        .usernameParameter("email")
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/signin")
@@ -45,6 +46,7 @@ public class Securityconfig{
                         .expiredUrl("/signin")
                         .maxSessionsPreventsLogin(true)
                 );
+        http.cors();
 
         return http.build();
     }

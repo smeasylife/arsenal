@@ -25,7 +25,8 @@ public class Member {
     @OneToMany(mappedBy = "writer")
     private List<Post> posts = new ArrayList<>();
 
-    private String username;
+    @Column(nullable = false)
+    private String email;
 
     private String password;
 
