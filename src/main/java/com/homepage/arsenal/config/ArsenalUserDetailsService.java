@@ -14,10 +14,10 @@ public class ArsenalUserDetailsService implements UserDetailsService {
     private final MemberService memberService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = null;
         try{
-            member = memberService.getMemberByUsername(username);
+            member = memberService.getMemberByEmail(email);
         } catch (IllegalArgumentException e){
             throw new UsernameNotFoundException(e.getMessage());
         }

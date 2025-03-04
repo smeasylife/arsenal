@@ -6,6 +6,7 @@ import com.homepage.arsenal.exception.MemberException;
 import com.homepage.arsenal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public Member getMemberByUsername(String username){
-        return memberRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Cannot find member by given username"));
+    public Member getMemberByEmail(String email){
+        return memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Cannot find member by given email"));
     }
 
     @Transactional
@@ -30,8 +31,8 @@ public class MemberService {
                 .build());
     }
 
-    private void validateDuplicatedUsername(String username){
-        memberRepository.findByUsername(username)
+    private void validateDuplicatedUsername(String email){
+        memberRepository.findByEmail(email)
                 .ifPresent(m -> {
                     throw new MemberException("Already existion username");
                 });
