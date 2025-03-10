@@ -41,3 +41,4 @@ kimskeypair.pem
 
 # 설정 파일
 src/main/resources/application.properties
+src/main/java/com/homepage/arsenal/config

@@ -29,15 +29,4 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     private LocalDateTime postDate = LocalDateTime.now();
-
-    public void updateContent(String content) {
-        this.content = content;
-    }
-
-    public void addPost(Member writer, String title, String content) {
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        postDate = LocalDateTime.now();
-    }
 }

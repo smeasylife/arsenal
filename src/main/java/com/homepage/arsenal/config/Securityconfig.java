@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,11 +27,17 @@ public class Securityconfig{
     private final ArsenalUserDetailsService arsenalUserDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
 
-    public Securityconfig(ArsenalUserDetailsService arsenalUserDetailsService,PasswordEncoder passwordEncoder, SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler) {
+    public Securityconfig(ArsenalUserDetailsService arsenalUserDetailsService,
+                          PasswordEncoder passwordEncoder,
+                          SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler,
+                          LogoutSuccessHandler logoutSuccessHandler
+            ) {
         this.arsenalUserDetailsService = arsenalUserDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.logoutSuccessHandler = logoutSuccessHandler;
     }
 
     @Bean
@@ -38,7 +45,7 @@ public class Securityconfig{
         http.csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/login", "/signup", "/error", "/css/**", "/js/**", "/images/**", "/static/**", "/*.ico").permitAll()
+                        .requestMatchers("/login", "/signup", "/error", "/css/**", "/js/**", "/images/**", "/static/**", "/*.ico", "/session").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors
@@ -51,12 +58,12 @@ public class Securityconfig{
                         .successHandler(authenticationSuccessHandler)
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/signin")
                         .invalidateHttpSession(true)
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                        .deleteCookies("JSESSIONID")
                 )
                 .sessionManagement(session -> session
                         .maximumSessions(2)
-                        .expiredUrl("/signin")
                         .maxSessionsPreventsLogin(true)
                 );
 
