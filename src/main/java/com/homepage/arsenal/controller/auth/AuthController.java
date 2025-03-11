@@ -14,7 +14,7 @@ public class AuthController {
 
     @GetMapping("/session")
     @ResponseBody
-    public ResponseEntity<?> sessionCheck(){
+    public ResponseEntity<String> sessionCheck(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
