@@ -2,6 +2,7 @@ package com.homepage.arsenal.service;
 
 import com.homepage.arsenal.domain.Member;
 import com.homepage.arsenal.dto.SignUpRequestForm;
+import com.homepage.arsenal.enums.RoleType;
 import com.homepage.arsenal.exception.MemberException;
 import com.homepage.arsenal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     public Member getMemberByEmail(String email){
-        return memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Cannot find member by given email"));
+        return memberRepository.findByEmail(email).orElseThrow(() -> new MemberException("Cannot find member by given email"));
     }
 
     @Transactional
@@ -28,6 +29,7 @@ public class MemberService {
                 .email(signUpRequestForm.getEmail())
                 .password(passwordEncoder.encode(signUpRequestForm.getPassword()))
                 .nickname(signUpRequestForm.getNickname())
+                .role(RoleType.ROLE_USER)
                 .build());
     }
 

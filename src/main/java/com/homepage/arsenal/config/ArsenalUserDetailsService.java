@@ -15,12 +15,7 @@ public class ArsenalUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = null;
-        try{
-            member = memberService.getMemberByEmail(email);
-        } catch (IllegalArgumentException e){
-            throw new UsernameNotFoundException(e.getMessage());
-        }
+        Member member = memberService.getMemberByEmail(email);
         return new DefaultUser(member);
     }
 }

@@ -1,5 +1,6 @@
 package com.homepage.arsenal.domain;
 
+import com.homepage.arsenal.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,9 @@ public class Member {
 
     private String password;
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 }
