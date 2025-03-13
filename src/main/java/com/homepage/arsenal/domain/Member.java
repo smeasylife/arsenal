@@ -31,7 +31,13 @@ public class Member {
 
     private String password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
