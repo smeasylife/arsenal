@@ -26,8 +26,6 @@
 
 권한 관리: 사용자 역할(Role)에 따른 접근 제어
 
-ORM: JPA
-
 ## ✅ TODO
 - Github Actions를 사용한 CI/ CD 구축
 - 게시글 CRUD: QueryDSL을 활용한 효율적인 쿼리 작성
